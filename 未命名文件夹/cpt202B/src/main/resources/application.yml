@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/schema_name
+    url: jdbc:mysql://localhost:3306/cpt202_schema
     username: root
     password: Maojiaqi666
     driver-class-name: com.mysql.cj.jdbc.Driver
