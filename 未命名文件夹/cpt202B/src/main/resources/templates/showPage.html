@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Management System</title>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        @import "/static/css/style.css";
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>Feedback Management System</h2>
+        <a href="/feedback/feedback">
+            <button class="btn-add-feedback">Add New Feedback</button>
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table class="table-feedback">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Student Name</th>
+                <th>Course Name</th>
+                <th>Rating</th>
+                <th>Feedback</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Loop through all feedbacks and create table rows -->
+            <tr th:each="feedback : ${feedbacks}">
+                <td th:text="${feedback.coachid}"></td>
+                <td th:text="${feedback.studentName}"></td>
+                <td th:text="${feedback.courseName}"></td>
+                <td th:text="${feedback.rating}"></td>
+                <td th:text="${feedback.feedback}"></td>
+                <td class="actions">
+                    <button class="edit action-icon" title="Edit"><i class="fas fa-edit edit-icon"></i></button>
+                    <button class="delete action-icon" title="Delete"><i class="fas fa-trash-alt delete-icon"></i></button>
+                    <button class="view action-icon" title="View"><i class="fas fa-eye view-icon"></i></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

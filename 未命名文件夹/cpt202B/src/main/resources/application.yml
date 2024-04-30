@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/schema_name
+    username: root
+    password: Maojiaqi666
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  mail:
+    host: smtp.163.com
+    username: 13585348990@163.com
+    password: YSLKJLHNEIYFYSJD

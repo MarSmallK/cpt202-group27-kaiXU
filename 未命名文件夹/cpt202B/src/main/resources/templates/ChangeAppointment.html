@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Change Appointment</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Change Appointment</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Member ID</th>
+            <th>Member Name</th>
+            <th>Appointed Trainer ID</th>
+            <th>Appointed Date & Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 遍历预约信息 -->
+        <tr th:each="appointment : ${appointments}">
+            <td th:text="${i_appointment.MemberID}">Member ID</td>
+            <td th:text="${i_appointment.MemberName}">Member Name</td>
+            <!-- 使用输入框展示和更改 Trainer ID -->
+            <td><input type="text" class="form-control trainer-id" th:value="${i_appointment.AppointedTrainerId}"></td>
+            <!-- 使用输入框展示和更改日期和时间 -->
+            <td>
+                <input type="datetime-local" class="form-control appointed-datetime"
+                       th:value="${i_appointment.AppointedTime}">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- 添加按钮，用于提交表格数据 -->
+    <button class="btn btn-primary" id="submitBtn">Submit</button>
+</div>
+
+<!-- 引入 jQuery 库 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // 点击提交按钮时触发事件
+        $('#submitBtn').on('click', function() {
+            // 构建表格数据的 JSON 对象
+            var data = [];
+            $('tbody tr').each(function() {
+                var rowData = {
+                    MemberID: parseInt($(this).find('td:eq(0)').text()),
+                    MemberName: $(this).find('td:eq(1)').text(),
+                    AppointedTrainerID: $(this).find('.trainer-id').val(),
+                    AppointedDateTime: $(this).find('.appointed-datetime').val()
+                };
+                data.push(rowData);
+            });
+
+            // 将 JSON 对象转换为字符串
+            var jsonData = JSON.stringify(data);
+
+            // 发送 POST 请求
+            $.ajax({
+                type: 'POST',
+                url: 'member/appointment/changeAppointment',
+                contentType: 'application/json',
+                data: jsonData,
+                success: function(response) {
+                    console.log('Data submitted successfully:', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error submitting data:', error);
+                }
+            });
+        });
+    });
+    fetch('member/appointment/changeAppointment', {
+  method: 'POST',
+  body: JSON.stringify(appointment),
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => {
+  if (!response.ok) {
+    throw new Error('Network response was not ok.');
+  }
+  return response.text();
+})
+.then(data => {
+  // 处理成功的返回数据
+  document.getElementById('success-message').innerText = data;
+})
+.catch(error => {
+  // 捕获服务端返回的异常，并展示给用户
+  document.getElementById('error-message').innerText = error.message;
+});
+</script>
+</body>
+
+</html>

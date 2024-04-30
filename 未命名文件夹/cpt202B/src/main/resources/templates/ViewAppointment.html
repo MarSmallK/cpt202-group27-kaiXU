@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>View Appointments</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
+    </head>
+<body>
+<div class="container mt-5">
+    <h2>View Appointments</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Appointed Trainer</th>
+            <th>Appointed Time</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 遍历预约信息 -->
+        <tr th:each="appointment : ${appointments}">
+            <td th:text="${i_appointment.AppointmentID}">Appointment ID</td>
+            <td th:text="${i_appointment.AppointedTrainer}">Appointed Trainer</td>
+            <td th:text="${i_appointment.AppointedTime}">Appointed Time</td>
+            <td>
+                <!-- 添加按钮，用于跳转到修改预约页面 -->
+                <a th:href="@{/changeAppointment}" class="btn btn-primary">Change Appointment</a>
+                <!-- 添加按钮，用于取消预约 -->
+                <a th:href="@{/cancelAppointment}" class="btn btn-danger">Cancel Appointment</a>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 引入 jQuery 库 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // 点击取消按钮时触发事件
+        $('.cancel-btn').on('click', function() {
+            // 获取预约所属的会员ID
+            var MemberID = $(this).data('member-id');
+
+            // 构建要取消预约的会员数据的 JSON 对象
+            var data = {
+                MemberID: MemberID
+            };
+
+            // 发送 POST 请求到取消预约路径
+            $.ajax({
+                type: 'POST',
+                url: 'member/appointment/cancelAppointment',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function(response) {
+                    console.log('Appointment cancelled successfully:', response);
+                    // 可以根据实际情况进行处理，比如刷新页面或更新数据
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error cancelling appointment:', error);
+                }
+            });
+        });
+
+
+    });
+</script>
+</body>
+</html>

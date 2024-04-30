@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健身系统用户主页</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .sidebar {
+            background-color: #24292e;
+            color: white;
+            width: 250px;
+            height: 100vh;
+            overflow: auto;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            display: block;
+            transition: background 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #3a4045;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #ccc;
+            display: block;
+            margin: 20px auto;
+        }
+        .field {
+            margin: 10px 0;
+        }
+        .field label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .field input, .field select {
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        .button {
+            width: calc(100% - 16px);
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar">
+    <a href="#">Make Appointment</a>
+    <a href="#">Our Equipment</a>
+    <a href="#">My Plan</a>
+    <a href="#">My Appointment</a>
+    <a href="#">My Information</a>
+</div>
+<div class="main-content">
+    <div class="container">
+        <img src="weight-1.png" alt="头像" class="avatar">
+        <div class="field">
+            <label for="birthday">生日:</label>
+            <input type="date" id="birthday" name="birthday">
+        </div>
+        <div class="field">
+            <label for="height">身高 (cm):</label>
+            <input type="number" id="height" name="height">
+        </div>
+        <div class="field">
+            <label for="weight">体重 (kg):</label>
+            <input type="number" id="weight" name="weight">
+        </div>
+        <div class="field">
+            <label for="gender">性别:</label>
+            <select id="gender" name="gender">
+                <option value="male">男</option>
+                <option value="female">女</option>
+                <option value="other">其他</option>
+            </select>
+        </div>
+        <button class="button" onclick="alert('此功能尚未实现')">修改密码</button>
+        <button class="button" onclick="alert('此功能尚未实现')">登出</button>
+    </div>
+</div>
+</body>
+</html>

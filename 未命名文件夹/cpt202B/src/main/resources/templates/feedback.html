@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Coach Feedback</title>
+    <style>
+        @import "/static/css/feedback.css";
+        @media only screen and (max-width: 600px) {
+            .modal-content {
+                width: 100%;
+            }
+        }
+        @media only screen and (min-width: 601px) {
+            .modal-content {
+                width: 50%;
+            }
+        }
+        @media only screen and (min-width: 993px) {
+            .modal-content {
+                width: 30%;
+            }
+
+        }
+    </style>
+</head>
+<body>
+
+<button id="openModalBtn">Add New Feedback</button>
+
+<!-- 弹窗 -->
+<div id="feedbackModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="container">
+            <h1>Fitness Coach Feedback</h1>
+            <form id="feedbackForm">
+                <div>
+                    <label for="studentName">Student Name:</label>
+                    <input type="text" id="studentName" name="studentName" required>
+                </div>
+                <div>
+                    <label for="course">Course:</label>
+                    <input type="text" id="course" name="courseName" required>
+                </div>
+                <div class="rating">
+                    <label><input type="radio" name="rating" value="5">★</label>
+                    <label><input type="radio" name="rating" value="4">★</label>
+                    <label><input type="radio" name="rating" value="3">★</label>
+                    <label><input type="radio" name="rating" value="2">★</label>
+                    <label><input type="radio" name="rating" value="1">★</label>
+                </div>
+                <div>
+                    <label for="feedback">Feedback:</label>
+                    <textarea id="feedback" name="feedback" rows="4" required></textarea>
+                </div>
+                <button type="submit">Post</button>
+            </form>
+            <div id="feedbackList"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const feedbackModal = document.getElementById('feedbackModal');
+    const openModalBtn = document.getElementById('openModalBtn');
+    const closeModalBtn = document.querySelector('.close');
+
+    openModalBtn.addEventListener('click', function() {
+        feedbackModal.style.display = 'block';
+    });
+
+    closeModalBtn.addEventListener('click', function() {
+        feedbackModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', function(event) {
+        if (event.target === feedbackModal) {
+            feedbackModal.style.display = 'none';
+        }
+    });
+
+    const feedbackForm = document.getElementById('feedbackForm');
+    const feedbackList = document.getElementById('feedbackList');
+
+    const ratingContainer = document.querySelector('.rating');
+
+    const stars = ratingContainer.querySelectorAll('input[type="radio"]');
+
+    stars.forEach(star => {
+        star.addEventListener('change', () => {
+            const selectedIndex = Array.from(stars).indexOf(star);
+
+            for (let i = 0; i <= selectedIndex; i++) {
+                ratingContainer.querySelectorAll('label')[i].style.color = '#f7d917';
+            }
+
+            for (let i = selectedIndex + 1; i < stars.length; i++) {
+                ratingContainer.querySelectorAll('label')[i].style.color = '#ddd';
+            }
+        });
+    });
+
+    feedbackForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const coachId = 1;
+        const studentName = this.elements['studentName'].value;
+        const courseName = this.elements['courseName'].value;
+        const rating = this.querySelector('input[name="rating"]:checked');
+        const feedback = this.elements['feedback'].value;
+
+        console.log("Submitting form with the following data:");
+        console.log("Coach ID:", coachId);
+        console.log("Student Name:", studentName);
+        console.log("Course Name:", courseName);
+        console.log("Rating:", rating ? rating.value : "No rating selected");
+        console.log("Feedback:", feedback);
+
+        if (!rating) {
+            console.error('Rating not selected');
+            return;
+        }
+
+        fetch('/feedback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                coachId: coachId,
+                studentName: studentName,
+                courseName: courseName,
+                rating: rating.value,
+                feedback: feedback
+            })
+
+        }).then(response => response.json())
+            .then(data => {
+                console.log('Response from server:', data);
+
+                const feedbackItem = document.createElement('div');
+                feedbackItem.classList.add('feedback-item');
+                feedbackItem.innerHTML = `
+                <p><strong>Student name:</strong> ${studentName}</p>
+                <p><strong>Course:</strong> ${courseName}</p>
+                <p><strong>Rating:</strong> ${rating.value}</p>
+                <p><strong>Feedback:</strong> ${feedback}</p>
+            `;
+
+                feedbackList.prepend(feedbackItem);
+
+                feedbackForm.reset();
+                feedbackModal.style.display = 'none';
+            })
+            .catch(error => console.error('Error:', error));
+    });
+
+
+</script>
+
+</body>
+</html>

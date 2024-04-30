@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYM Management Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .module {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .module h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .module p {
+            color: #666;
+            line-height: 1.5;
+        }
+        .module-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3c8dbc;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        .module-button:hover {
+            background-color: #367fa9;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>GYM Management Dashboard</h1>
+    <div class="module">
+        <h2>Trainer Management</h2>
+        <p>Click the button below to display/add/delete/update the trainer of the system.</p>
+        <a href="/TrainerDisplay" class="module-button">Trainer Management</a>
+    </div>
+    <div class="module">
+        <h2>Marketing Notification Management</h2>
+        <p>Edit or update existing marketing notifications sent to members.</p>
+        <a href="/NotificationDisplay" class="module-button">Modify Notification</a>
+    </div>
+    <div class="module">
+        <h2>Send Marketing Notification to the Expiring Members</h2>
+        <p>Send promotional offers or reminders to members whose membership is about to expire.</p>
+        <a href="/send_notification" class="module-button">Send Notification</a>
+    </div>
+    <div class="module">
+        <h2>Access to GYM Sales Report</h2>
+        <p>View detailed sales report of the GYM, including membership sales, merchandise sales, etc.</p>
+        <a href="#" class="module-button">View Sales Report</a>
+    </div>
+
+    <div class="module">
+        <h2>Access to GYM Trainers Report</h2>
+        <p>View detailed report of GYM trainers, including their performance, schedules, etc.</p>
+        <a href="#" class="module-button">View Trainers Report</a>
+    </div>
+</div>
+</body>
+</html>
+
