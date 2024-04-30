@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -37,6 +36,11 @@ public class FeedbackController {
         return ResponseEntity.ok(this.feedbackService.queryById(id));
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
+        feedbackService.delete(id);
+        return ResponseEntity.ok().build();
+    }
     @GetMapping("/feedback")
     public String showFeedback() {
         return "feedback";
