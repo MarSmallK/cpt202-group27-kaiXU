@@ -1,6 +1,7 @@
 package group27.xukai.cpt202b.mapper;
 
 import group27.xukai.cpt202b.entity.Feedback;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -24,5 +25,7 @@ public interface FeedbackDao {
 
     List<Feedback> selectAllFeedback();
 
+    @Delete("DELETE FROM feedback WHERE id = #{id}")
+    void deleteById(Integer id);
 }
 
