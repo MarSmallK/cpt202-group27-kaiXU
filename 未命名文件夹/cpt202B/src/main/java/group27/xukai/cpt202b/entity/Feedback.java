@@ -1,4 +1,4 @@
-package group27.yangzhaohui.cpt202b.entity;
+package group27.xukai.cpt202b.entity;
 
 import java.io.Serializable;
 
