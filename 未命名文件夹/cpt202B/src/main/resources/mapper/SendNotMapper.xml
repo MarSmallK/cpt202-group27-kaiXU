@@ -1,0 +1,10 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="group27.xukai.cpt202b.mapper.NotificationMapper">
+    <insert id="insert">
+        INSERT INTO notification (type, trainer_ID, customer_ID, date, content)
+        VALUES (#{type}, #{trainerId}, #{customerId}, #{date}, #{content})
+    </insert>
+    <select id="selectByPrimaryKey" resultType="group27.xukai.cpt202b.entity.Notification">
+        SELECT * FROM notification WHERE notificationId = #{notificationId}
+    </select>
+</mapper>
