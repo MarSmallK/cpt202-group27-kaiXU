@@ -59,4 +59,5 @@ public class NotificationController {
         notificationInterface.Update(notification);
         return new ModelAndView("redirect:/NotificationDisplay");
     }
+
 }

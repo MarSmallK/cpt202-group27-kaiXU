@@ -5,6 +5,12 @@
     <title>SendNotification</title>
 </head>
 <body>
+<div th:if="${message}">
+    <p th:text="${message}"></p>
+</div>
+<div th:if="${error}">
+    <p th:text="${error}"></p>
+</div>
 
 <table class="table">
     <thead>
