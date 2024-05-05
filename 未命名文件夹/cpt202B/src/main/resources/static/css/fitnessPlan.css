@@ -1,0 +1,37 @@
+/* fitnessPlan.css */
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #999;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f3f3f3;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+button:hover {
+    /* 添加你想要的样式，比如改变背景色或者字体颜色 */
+    background-color: lightblue; /* 示例：改变背景色为浅蓝色 */
+    color: white; /* 示例：改变文字颜色为白色 */
+    cursor: pointer; /* 将鼠标样式设置为指针 */
+}
+
