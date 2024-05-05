@@ -1,0 +1,97 @@
+/* Header styling */
+.header {
+    margin-top: 20px; /* Spacing at the top */
+    margin-bottom: 20px; /* Spacing at the bottom */
+}
+
+/* Title styling */
+.title {
+    font-size: 24px; /* Large font size for visibility */
+    text-align: center; /* Center-align title */
+}
+
+/* Return button styling for medium and larger screens */
+@media (min-width: 768px) {
+    .header .col-md-9 {
+        text-align: left; /* Align the title to the left on larger screens */
+    }
+    .header .col-md-3 {
+        display: flex;
+        justify-content: flex-end; /* Right-align the button on larger screens */
+    }
+}
+
+.button-return {
+    padding: 8px 12px; /* Button padding */
+}
+
+
+/* Splitting table cells into two rows */
+.table td {
+    display: table-cell;
+    vertical-align: middle;
+    word-wrap: break-word;
+}
+
+/* Splitting content column into two rows */
+.table .table-header4,
+.table .table-header4 + td {
+    display: block;
+    word-wrap: break-word;
+}
+
+/* Adjusting content column position */
+.table .table-header4 {
+    width: 100px; /* Adjust width as needed */
+}
+
+.table .table-header4 + td {
+    padding-left: 120px; /* Adjust padding as needed */
+}
+
+/* Styling link buttons */
+.link-button {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+
+.link-button:hover {
+    background-color: #0056b3;
+}
+
+.link-button.delete {
+    background-color: #dc3545;
+}
+
+.link-button.delete:hover {
+    background-color: #bd2130;
+}
+
+/* Additional styling */
+.add-button {
+    margin-top: 20px;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}

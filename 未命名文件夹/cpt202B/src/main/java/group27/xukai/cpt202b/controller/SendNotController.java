@@ -31,15 +31,19 @@ public class SendNotController {
             Notification notification = notificationInterface.selectByPrimaryKey(Math.toIntExact(notificationId));
             if (notification != null) {
                 notificationInterface.sendNot(notification);
-                redirectAttributes.addFlashAttribute("message", "Notification sent successfully! The new record has been added below！");
+                redirectAttributes.addFlashAttribute("message", "Notification sent successfully! The new record has been added below.");
+                System.out.println("Notification sent and message added to flash attributes");
             } else {
                 redirectAttributes.addFlashAttribute("error", "Error: Notification not found.");
+                System.out.println("Notification not found and error added to flash attributes");
             }
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error sending notification.");
+            System.out.println("Exception occurred: " + e.getMessage());
         }
         return "redirect:/SendNot"; // Redirecting back to the main page
     }
+
 
     @PostMapping("/send")
     @ResponseBody

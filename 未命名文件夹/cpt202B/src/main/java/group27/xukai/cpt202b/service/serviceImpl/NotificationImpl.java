@@ -75,7 +75,7 @@ public class NotificationImpl implements NotificationInterface {
             // Attempt to send email first
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom("2667952546@qq.com");
-            message.setTo(notification.getCustomerId());
+            message.setTo(notification.getMemberemail());
             message.setSubject(notification.getType());
             message.setText(notification.getContent());
             mailSender.send(message);

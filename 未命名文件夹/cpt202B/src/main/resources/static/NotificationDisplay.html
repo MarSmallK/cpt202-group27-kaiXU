@@ -15,8 +15,8 @@
         <tr>
             <th class="table-header">Notification ID</th>
             <th class="table-header">Type</th>
-            <th class="table-header2">Trainer ID</th>
-            <th class="table-header3">Customer ID</th>
+            <th class="table-header2">Plan Level</th>
+            <th class="table-header3">Member E-mail</th>
             <th class="table-header">Date</th>
             <th class="table-header4">Content</th>
             <th class="table-header">Operations</th>
@@ -26,8 +26,8 @@
         <tr th:each="notifications : ${notifications}">
             <td th:text="${notifications.notificationId}"></td>
             <td th:text="${notifications.type}"></td>
-            <td th:text="${notifications.trainerId}"></td>
-            <td th:text="${notifications.customerId}"></td>
+            <td th:text="${notifications.planlevel}"></td>
+            <td th:text="${notifications.memberemail}"></td>
             <td th:text="${notifications.date}"></td>
             <td th:text="${notifications.content}"></td>
             <td>
