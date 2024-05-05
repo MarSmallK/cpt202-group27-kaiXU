@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Send Notification Module</title>
+    <link rel="stylesheet" type="text/css" href="SendNot.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body data-message="[[${message}]]" data-error="[[${error}]]">
+<!--标题和返回按钮 -->
+<div class="container header">
+    <div class="row align-items-center">
+        <div class="col-12 col-md-9">
+            <h1 class="title">Send Notification Module</h1>
+        </div>
+        <div class="col-12 col-md-3 text-md-right">
+            <a href="http://localhost:8090/managerhomepage.html" class="btn btn-primary button-return">Return to Home</a>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modalMessage" th:text="${message ?: 'Welcome to the Sending Marketing Notifications module!'}"></p>
+                <p th:if="${error}" class="text-danger" th:text="${error}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th class="table-header">Notification ID</th>
+        <th class="table-header">Type</th>
+        <th class="table-header2">Plan Level</th>
+        <th class="table-header3">Member E-mail</th>
+        <th class="table-header">Date</th>
+        <th class="table-header4">Content</th>
+        <th class="table-header">Operations</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="notifications : ${notifications}">
+        <td th:text="${notifications.notificationId}"></td>
+        <td th:text="${notifications.type}"></td>
+        <td th:text="${notifications.planlevel}"></td>
+        <td th:text="${notifications.memberemail}"></td>
+        <td th:text="${notifications.date}"></td>
+        <td th:text="${notifications.content}"></td>
+        <td>
+            <a th:href="@{sendnotificationId(notificationId=${notifications.notificationId})}" class="link-button">Update</a>
+            <a th:href="@{delNot(notificationId=${notifications.notificationId})}" class="link-button delete">Delete</a>
+            <a th:href="@{/sendNotification(notificationId=${notifications.notificationId})}" class="link-button delete">Send</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="add-button">
+    <a href="/addPageNot" class="link-button">Add New Notification</a>
+</div>
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Custom JavaScript -->
+<script src="SendNot.js"></script>
+</body>
+</html>

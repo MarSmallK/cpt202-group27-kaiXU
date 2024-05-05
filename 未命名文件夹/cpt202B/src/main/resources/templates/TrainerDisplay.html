@@ -16,10 +16,12 @@
             <th class="table-header">Trainer ID</th>
             <th class="table-header">Name</th>
             <th class="table-header">Sex</th>
+            <th class="table-header">Email</th>
             <th class="table-header">Honour</th>
             <th class="table-header">Experience</th>
             <th class="table-header">Entry Time</th>
             <th class="table-header">Star Level</th>
+            <th class="table-header">Customer Evaluation</th>
             <th class="table-header">Operations</th>
         </tr>
         </thead>
@@ -28,10 +30,12 @@
             <td th:text="${trainers.trainerId}"></td>
             <td th:text="${trainers.name}"></td>
             <td th:text="${trainers.sex}"></td>
+            <td th:text="${trainers.email}"></td>
             <td th:text="${trainers.honour}"></td>
             <td th:text="${trainers.experience}"></td>
             <td th:text="${trainers.entrytime}"></td>
             <td th:text="${trainers.starlevel}"></td>
+            <td th:text="${trainers.customerevaluation}"></td>
             <td>
                 <a th:href="@{sendtrainerId(trainerId=${trainers.trainerId})}" class="link-button">Update</a>
                 <a th:href="@{del(trainerId=${trainers.trainerId})}" class="link-button delete">Delete</a>
