@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        .login-container input {
+            width: calc(100% - 40px);
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .login-container button {
+            width: calc(100% - 40px);
+            margin-top: 20px;
+            padding: 15px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 18px;
+        }
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <input type="text" placeholder="Please enter managerID" id="managerID"><br>
+    <input type="password" placeholder="Please enter password" id="password"><br>
+    <button id="btn" onclick="managerlogin()">Login</button>
+</div>
+</body>
+<script>
+    function managerlogin() {
+        const managerID = document.getElementById("managerID").value;
+        const password = document.getElementById("password").value;
+        if (!managerID || !password) {
+            alert("Please enter manager ID and password");
+            return;
+        }
+        fetch('/managerlogin', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({managerID: managerID, password: password})
+        })
+            .then(res => res.json()) // Convert response object to JSON format
+            .then(data => {
+                if (data.id) { // Note that it is data.id, not res.id
+                    alert("Login successful");
+                    location.href = "managerhomepage.html";
+                } else {
+                    alert("Login failed, please try again.");
+                }
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+                alert("An error occurred during login.");
+            });
+    }
+</script>
+</html>
+
+
+
+

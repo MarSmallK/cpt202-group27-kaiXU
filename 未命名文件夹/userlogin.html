@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XJTLU Fitness Centre</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        .bg {
+            background-image: url('background.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100%;
+        }
+        .login-container {
+            position: absolute;
+            top: 50%;
+            left: 70%;
+            transform: translate(-50%, -50%);
+            width: 350px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        .login-form {
+            display: flex;
+            flex-direction: column;
+        }
+        .login-form input[type='text'],
+        .login-form input[type='password'] {
+            margin-bottom: 10px;
+            padding: 15px;
+            border: none;
+            border-radius: 4px;
+        }
+        .login-form input[type='submit'] {
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .login-form input[type='submit']:hover {
+            background-color: #0056b3;
+        }
+        .login-header {
+            margin-bottom: 20px;
+        }
+        .login-header h1 {
+            margin: 0;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .links p {
+            margin-top: 10px;
+        }
+        .links a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<a href="#" class="back-button" onclick="goBack()">返回</a>
+
+<div class="bg">
+    <div class="login-container">
+        <div class="login-header">
+            <h1>XJTLU Fitness Centre</h1>
+        </div>
+        <form class="login-form" onsubmit="login(); return false;">
+            <input id="username" type="text" placeholder="Username" required>
+            <input id="password" type="password" placeholder="Password" required>
+            <input type="submit" value="登录">
+        </form>
+        <div class="links">
+            <p>Don't have an account? <a href="register.html">Register</a></p>
+            <p>Forgot your password? <a href="forgetpassword.html">Reset Password</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function goBack() {
+        location.href = "index.html";
+
+    }
+
+    function login() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        fetch('/login', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: username, password: password })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.id) {
+                    alert("success");
+                    sessionStorage.setItem("username",username)
+                    location.href = "userhomepage.html";
+                } else {
+                    // 登录失败
+                    alert("error");
+                }
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+                alert("error");
+            });
+    }
+
+</script>
+</body>
+</html>

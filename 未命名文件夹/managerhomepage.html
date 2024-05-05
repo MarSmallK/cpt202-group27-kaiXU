@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户个人主页</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            width: 80%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #ccc;
+            margin: 20px auto;
+            display: block;
+        }
+        .field {
+            margin: 10px 0;
+        }
+        .field label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .field input, .field select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 20px 0;
+            background: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <img src="weight-1.png" alt="头像" class="avatar">
+    <div class="field">
+        <label for="birthday">生日:</label>
+        <input type="date" id="birthday" name="birthday">
+    </div>
+    <div class="field">
+        <label for="height">身高 (cm):</label>
+        <input type="number" id="height" name="height">
+    </div>
+    <div class="field">
+        <label for="weight">体重 (kg):</label>
+        <input type="number" id="weight" name="weight">
+    </div>
+    <div class="field">
+        <label for="gender">性别:</label>
+        <select id="gender" name="gender">
+            <option value="male">男</option>
+            <option value="female">女</option>
+            <option value="other">其他</option>
+        </select>
+    </div>
+    <button class="button" onclick="alert('此功能尚未实现')">修改密码</button>
+    <button class="button" onclick="alert('此功能尚未实现')">登出</button>
+</div>
+</body>
+</html>
+
