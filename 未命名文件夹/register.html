@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+<!--    <link rel="stylesheet" type="text/css" href="styles.css">-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        .container h2 {
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        input[type="text"],
+        input[type="password"],
+        button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .error-message, .success-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .success-message {
+            color: green;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Register</h2>
+    <div class="form-group">
+        <input type="text" placeholder="Please enter username" id="username" onblur="checkField('username')">
+        <div id="usernameError" class="error-message"></div>
+        <div id="usernameSuccess" class="success-message"></div>
+    </div>
+    <div class="form-group">
+        <input type="password" placeholder="Please enter password" id="password" onblur="checkField('password')">
+        <div id="passwordError" class="error-message"></div>
+        <div id="passwordSuccess" class="success-message"></div>
+    </div>
+    <div class="form-group">
+        <input type="text" placeholder="Please enter email" id="email" onblur="checkField('email')">
+        <div id="emailError" class="error-message"></div>
+        <div id="emailSuccess" class="success-message"></div>
+    </div>
+    <div class="form-group">
+        <input type="text" placeholder="Please enter code" id="code" onblur="checkField('code')">
+        <div id="codeError" class="error-message"></div>
+    </div>
+    <button id="getcode" onclick="getCode()">Get Code</button>
+    <button id="register" onclick="register()">Register</button>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    function register() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const email = document.getElementById("email").value;
+        const code = document.getElementById("code").value;
+
+        // 检查用户名、密码和电子邮件是否为空
+        if (!username || !password || !email) {
+            alert("请输入完整信息。");
+            return;
+        }
+
+        // 发起注册请求
+        fetch("/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8"
+            },
+            body: JSON.stringify({ username: username, password: password, email: email, code: code })
+        })
+            .then(res => res.text()) // 修改这里以处理文本响应
+            .then(data => {
+                if (data) {
+                    alert("注册成功");
+                    location.href = "userhomepage.html";
+                } else {
+                    alert(data); // 直接显示后端返回的错误消息
+                }
+            })
+            .catch(error => {
+                console.error("注册失败:", error);
+                alert("注册失败，请重试");
+            });
+    }
+
+    function getCode() {
+        axios.post('/code', {
+            email: document.getElementById('email').value
+        }).then(({data}) => {
+            alert(data);
+        });
+    }
+
+    function checkField(field) {
+        var value = document.getElementById(field).value;
+        var errorElement = document.getElementById(field + 'Error');
+        var successElement = document.getElementById(field + 'Success');
+        var errorMessage = '';
+        var successMessage = '✔';
+
+        // 根据字段类型验证
+        switch (field) {
+            case 'username':
+                if (value.length < 4 || value.length > 10) {
+                    errorMessage = 'Username length should be between 3 and 10 characters';
+                    successMessage = '';
+                } else {
+                    validateUsername(value, successElement, errorElement);
+                }
+                break;
+            case 'email':
+                const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                if(regex.test(email)){
+                    errorMessage = 'Please enter a valid email address.';
+                    successMessage = '';
+                }else {
+                    validateEmail(value, successElement, errorElement);
+                }
+                break;
+            case 'password':
+                if (!/^(?=.*[a-zA-Z])(?=.*\d).{6,15}$/.test(value)) {
+                    errorMessage = 'Password must contain at least one letter and one number, and be between 6 and 15 characters';
+                    successMessage = '';
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        // 更新错误消息
+        errorElement.innerHTML = errorMessage;
+        successElement.innerHTML = successMessage;
+    }
+
+    function validateUsername(username, successElement,errorElement) {
+        fetch('/check_username', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: username })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (!data) {
+                    errorElement.innerHTML = 'Username already exists';
+                    successElement.innerHTML = '';
+                } else {
+                    successElement.innerHTML = 'Username available';
+                    errorElement.innerHTML = '';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                successElement.innerHTML = 'Error checking username';
+            });
+    }
+
+function validateEmail(email,successElement,errorElement) {
+        fetch('/check_email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (!data) {
+                    errorElement.innerHTML = 'Already existed';
+                    successElement.innerHTML = '';
+                } else {
+                    successElement.innerHTML = ' ';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+</body>
+</html>
+
+
