@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>器材管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="./css/layui.css" media="all">
+</head>
+<body>
+<form id="equipmentFormId" class="layui-form"  lay-filter="equipmentFormFilter" style="width: 100%;">
+    <input type="text" v-model="id" id="id" name="id" style="display: none">
+    <div class="layui-form-item">
+        <label class="layui-form-label">type</label>
+        <div class="layui-input-block">
+            <select name="equipmentType" id="equipmentType" lay-filter="required" lay-verify="required">
+                <option value="" selected>equipmentType</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">price</label>
+        <div class="layui-input-block">
+            <input type="text" name="equipmentPrice" lay-filter="required" lay-verify="required" autocomplete="off" placeholder="equipmentPrice" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">code</label>
+        <div class="layui-input-block">
+            <input type="text" name="equipmentCode" lay-filter="required" lay-verify="required" autocomplete="off" placeholder="equipmentCode" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="display: none" id="addTimeDiv">
+        <label class="layui-form-label">addTime</label>
+        <div class="layui-input-block">
+            <input type="text" name="addTime" id="addTime" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <button class="layui-btn" lay-submit="" id="subButton" lay-filter="saveEquipment">submit</button>
+    </div>
+</form>
+
+<script src="./layui.js" charset="utf-8"></script>
+<script src="./jquery-3.0.0.min.js" charset="utf-8"></script>
+<script src="./common.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+<script>
+    var searchParams = new URLSearchParams(window.location.search);
+    var objectid=searchParams.get('id');
+    var optionType=searchParams.get('type');
+    layui.use(['form','layedit'], function(){
+        var form = layui.form ,layer = layui.layer;
+        $.ajax({
+            async:false,
+            url: baseURL+'/equipment/classify/queryListClassify',
+        }).done(function (res) {
+            if (res.code) {
+                $.each(res.data, function (index, item) {
+                    $('#equipmentType').append(new Option(item.classifyName, item.id));
+                });
+                form.render('select');
+            }
+        })
+        if(optionType==='edit' || optionType==='view'){
+            if(optionType==='view'){
+                $("#subButton").hide();
+                $("#addTimeDiv").show();
+            }
+            $.ajax({
+                url: baseURL+'/equipment/equipment/queryOneEquipment?id='+objectid,
+            }).done(function (res) {
+                if (res.code) {
+                    //表单初始赋值
+                    form.val('equipmentFormFilter',{
+                        'id': res.data.id,
+                        'equipmentType': res.data.equipmentType,
+                        'equipmentCode': res.data.equipmentCode,
+                        'equipmentPrice': res.data.equipmentPrice,
+                        'equipmentPhoto': res.data.equipmentPhoto,
+                        'addTime': res.data.addTime,
+                    })
+                    form.render();
+                }
+            }).fail(function (res) {
+                layer.msg('error!',{icon:2,time:1000});
+            })
+        }
+        //监听提交
+        form.on('submit(saveEquipment)', function(data){
+            var myload=layer.load(1);
+            $.ajax({
+                async:false,
+                type: "POST",
+                url: baseURL+'/equipment/equipment/saveOrUpdateEquipment',
+                data: data.field,
+            }).done(function (res) {
+                if (res.code) {
+
+                    parent.location.reload();
+                    parent.layer.msg('添加成功!',{icon:1,time:3000});
+                }else {
+                    layer.msg('error!',{icon:2,time:3000});
+                }
+            }).fail(function (res) {
+                layer.msg('error!',{icon:2,time:1000});
+            })
+            layer.close(myload);
+            var layerFrame = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(layerFrame);
+            return false;
+        });
+    });
+</script>
+</body>
+</html>
