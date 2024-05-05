@@ -10,13 +10,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Integer> {
     @Query(value = "SELECT balance FROM member WHERE Id = ?1", nativeQuery = true)
-    int getBalanceById(int Id);
+    int getBalanceByUserName(String userName);
     @Query(value = "SELECT plan_level FROM member WHERE Id = ?1", nativeQuery = true)
-    String getPlanLevel(int Id);
+    String getPlanLevel(String userName);
 
     @Modifying
     @Query(value = "UPDATE member SET plan_level = null, plan_date = null, start_time = null, end_time = null, purchase_plan_Id = null WHERE Id = :Id", nativeQuery = true)
-    void clearMemberData(@Param("Id") int Id);
+    void clearMemberData(@Param("userName") String userName);
+
+    Member findByUserName(String userName); // 根据用户名查询用户信息
 
 
 }

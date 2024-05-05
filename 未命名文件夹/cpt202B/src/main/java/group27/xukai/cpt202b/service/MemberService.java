@@ -7,15 +7,15 @@ import java.util.List;
 
 // MemberService.java
 public interface MemberService {
-    int getMemberBalance(int Id);
-    String getPlanLevel(int Id);
-    void updateMemberWithFitnessPlan(String planLevel, String planDate, int Id);
-    void updateMemberBalance(int balance, int Id);
-    void updateMemberPurchasePlanId(Integer purchasePlanId, int Id);
+    int getMemberBalance(String userName);
+    String getPlanLevel(String userName);
+    void updateMemberWithFitnessPlan(String planLevel, String planDate, String userName);
+    void updateMemberBalance(int balance, String userName);
+    void updateMemberPurchasePlanId(Integer purchasePlanId, String userName);
 
-    void updateTime(int Id, LocalDateTime startTime, LocalDateTime endTime);
+    void updateTime(String userName, LocalDateTime startTime, LocalDateTime endTime);
 
     List<Member> getMemberData();
 
-    void clearMemberData(int Id);
+    void clearMemberData(String userName);
 }

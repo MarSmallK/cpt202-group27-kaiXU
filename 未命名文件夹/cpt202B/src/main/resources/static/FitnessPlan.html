@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Fitness Plan</title>
-    <link rel="stylesheet" href="/css/fitnessPlan.css">
+    <link rel="stylesheet" href="/static/css/fitnessPlan.css">
 </head>
 <body>
 <h2>Fitness Plan</h2>
@@ -37,8 +37,15 @@
 <script th:inline="javascript">
 
     function buy(planId, planPrice) {
+        var user = sessionStorage.getItem("userName");
         // 发送 AJAX 请求到后端，获取当前用户的余额
-        fetch('/member/fitnessplan/getBalance')
+        fetch('/member/fitnessplan/getBalance', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userName: user })
+        })
             .then(response => response.json())
             .then(balance => {
                 // 检查余额是否足够支付计划价格
@@ -52,7 +59,7 @@
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ planId: planId })
+                        body: JSON.stringify({ userName: user, planId: planId })
                     }).then(response => {
                         if (response.ok) {
                             // 如果购买成功，弹出购买成功的提示框
@@ -73,26 +80,18 @@
             });
     }
 
-
     function updateBalance(planId) {
+        user = sessionStorage.getItem("userName");
         /* 发送POST请求给后端 */
         fetch('/member/fitnessplan/buyAndUpdate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ planId: planId }) })}/* 将planId作为请求体发送给后端 */
-
-
+            body: JSON.stringify({ userName: user, planId: planId }) })}/* 将planId作为请求体发送给后端 */
 </script>
 
-<script>
-    axios.get('http://localhost:3306/api/user/name', {
-        withCredentials: true
-    }).then(({data}) => {
-        document.getElementById('username').innerText = data.data
-    })
-</script>
+<!--<script src="/static/js/getUserName.js"></script>-->
 </body>
 </html>
 

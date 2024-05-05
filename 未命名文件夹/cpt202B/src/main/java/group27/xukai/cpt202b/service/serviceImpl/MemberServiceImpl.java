@@ -32,24 +32,24 @@ public class MemberServiceImpl implements MemberService {
 
     @Transactional
     @Override
-    public void clearMemberData(int Id) {
-        memberRepository.clearMemberData(Id);
+    public void clearMemberData(String userName) {
+        memberRepository.clearMemberData(userName);
     }
 
     @Override
-    public int getMemberBalance(int Id) {
-        return memberRepository.getBalanceById(Id);
+    public int getMemberBalance(String userName) {
+        return memberRepository.getBalanceByUserName(userName);
     }
 
 
     @Override
-    public String getPlanLevel(int Id) {
-        return memberRepository.getPlanLevel(Id);
+    public String getPlanLevel(String userName) {
+        return memberRepository.getPlanLevel(userName);
     }
 
     @Override
-    public void updateMemberWithFitnessPlan(String planLevel, String planDate, int Id) {
-        Member member = memberRepository.findById(Id).orElse(null);
+    public void updateMemberWithFitnessPlan(String planLevel, String planDate, String userName) {
+        Member member = memberRepository.findByUserName(userName);
         if (member != null) {
             member.setPlanLevel(planLevel);
             member.setPlanDate(planDate);
@@ -58,8 +58,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void updateMemberBalance(int balance, int Id) {
-        Member member = memberRepository.findById(Id).orElse(null);
+    public void updateMemberBalance(int balance, String userName) {
+        Member member = memberRepository.findByUserName(userName);
         if (member != null) {
             member.setBalance(balance);
             memberRepository.save(member);
@@ -67,8 +67,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void updateMemberPurchasePlanId(Integer purchasePlanId, int Id) {
-        Member member = memberRepository.findById(Id).orElse(null);
+    public void updateMemberPurchasePlanId(Integer purchasePlanId, String userName) {
+        Member member = memberRepository.findByUserName(userName);
         if (member != null) {
             member.setPurchasePlanId(purchasePlanId);
             memberRepository.save(member);
@@ -76,8 +76,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void updateTime(int Id, LocalDateTime startTime, LocalDateTime endTime) {
-        Member member = memberRepository.findById(Id).orElse(null);
+    public void updateTime(String userName, LocalDateTime startTime, LocalDateTime endTime) {
+        Member member = memberRepository.findByUserName(userName);
         if (member != null) {
             // 更新用户的开始时间和结束时间
             member.setStartTime(startTime);
