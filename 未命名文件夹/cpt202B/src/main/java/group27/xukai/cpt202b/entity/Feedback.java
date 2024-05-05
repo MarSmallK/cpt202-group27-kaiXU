@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Feedback implements Serializable {
     private static final long serialVersionUID = -83466038426029298L;
 
+    private Integer id;
     private Integer coachid;
 
     private String studentName;
@@ -16,6 +17,12 @@ public class Feedback implements Serializable {
     private String feedback;
 
 
+    public Integer getId() {
+        return id;
+    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
     public Integer getCoachid() {
         return coachid;
     }

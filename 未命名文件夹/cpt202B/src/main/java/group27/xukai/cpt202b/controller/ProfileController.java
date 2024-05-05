@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
         @Autowired
         private ProfileService profileService;
 
-        @PostMapping("member/profile/save")
+        @PostMapping("/save")
         public Profile saveProfile(@RequestBody Profile profile) {
             return profileService.insert(profile);
         }

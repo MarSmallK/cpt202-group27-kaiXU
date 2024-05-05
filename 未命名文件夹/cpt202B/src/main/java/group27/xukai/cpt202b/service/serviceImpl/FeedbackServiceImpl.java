@@ -1,7 +1,7 @@
 package group27.xukai.cpt202b.service.serviceImpl;
 
-import group27.xukai.cpt202b.entity.Feedback;
 import group27.xukai.cpt202b.mapper.FeedbackDao;
+import group27.xukai.cpt202b.entity.Feedback;
 import group27.xukai.cpt202b.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +35,12 @@ public class FeedbackServiceImpl implements FeedbackService {
         this.feedbackDao.insertFeedback(feedback);
         return feedback;
     }
+
+    @Override
+    public void delete(Integer id) {
+        feedbackDao.deleteById(id);
+    }
+
     @Autowired
     private FeedbackDao feedbackMapper;
     public List<Feedback> findAllFeedback() {
