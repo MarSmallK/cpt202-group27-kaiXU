@@ -1,0 +1,105 @@
+/* Start with resetting some basic elements */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #eeeeee;
+}
+
+.btn-add-feedback {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-add-feedback:hover {
+    background-color: #218838;
+}
+
+.table-feedback {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table-feedback thead tr {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dddddd;
+}
+
+.table-feedback th,
+.table-feedback td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #dddddd;
+}
+
+.table-feedback th {
+    font-weight: 600;
+}
+
+.table-feedback tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+}
+
+.edit, .delete, .view {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em; /* Adjust the icon size */
+}
+
+.edit:hover, .delete:hover, .view:hover {
+    opacity: 0.7;
+}
+
+/* Add responsiveness */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .btn-add-feedback {
+        margin-top: 20px;
+    }
+
+    .table-feedback {
+        display: block;
+        overflow-x: auto;
+    }
+}
