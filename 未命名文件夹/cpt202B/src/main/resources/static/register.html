@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+<!--    <link rel="stylesheet" type="text/css" href="styles.css">-->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -29,6 +29,10 @@
             margin-bottom: 30px;
             color: #333;
         }
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
         input[type="text"],
         input[type="password"],
         button {
@@ -37,8 +41,15 @@
             border-radius: 5px;
             border: 1px solid #ccc;
             box-sizing: border-box;
-            margin-bottom: 15px;
             font-size: 16px;
+        }
+        .error-message, .success-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .success-message {
+            color: green;
         }
         button {
             background-color: #007bff;
@@ -46,6 +57,7 @@
             border: none;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            margin-top: 10px;
         }
         button:hover {
             background-color: #0056b3;
@@ -55,10 +67,25 @@
 <body>
 <div class="container">
     <h2>Register</h2>
-    <input type="text" placeholder="Please enter username" id="username">
-    <input type="password" placeholder="Please enter password" id="password">
-    <input type="text" placeholder="Please enter email" id="email">
-    <input type="text" placeholder="Please enter code" id="code">
+    <div class="form-group">
+        <input type="text" placeholder="Please enter username" id="username" onblur="checkField('username')">
+        <div id="usernameError" class="error-message"></div>
+        <div id="usernameSuccess" class="success-message"></div>
+    </div>
+    <div class="form-group">
+        <input type="password" placeholder="Please enter password" id="password" onblur="checkField('password')">
+        <div id="passwordError" class="error-message"></div>
+        <div id="passwordSuccess" class="success-message"></div>
+    </div>
+    <div class="form-group">
+        <input type="text" placeholder="Please enter email" id="email" onblur="checkField('email')">
+        <div id="emailError" class="error-message"></div>
+        <div id="emailSuccess" class="success-message"></div>
+    </div>
+    <div class="form-group">
+        <input type="text" placeholder="Please enter code" id="code" onblur="checkField('code')">
+        <div id="codeError" class="error-message"></div>
+    </div>
     <button id="getcode" onclick="getCode()">Get Code</button>
     <button id="register" onclick="register()">Register</button>
 </div>
@@ -72,7 +99,7 @@
 
         // 检查用户名、密码和电子邮件是否为空
         if (!username || !password || !email) {
-            alert("用户名、密码和电子邮件不能为空，请输入完整信息。");
+            alert("请输入完整信息。");
             return;
         }
 
@@ -86,7 +113,7 @@
         })
             .then(res => res.text()) // 修改这里以处理文本响应
             .then(data => {
-                if (data === "注册成功") {
+                if (data) {
                     alert("注册成功");
                     location.href = "userhomepage.html";
                 } else {
@@ -98,16 +125,99 @@
                 alert("注册失败，请重试");
             });
     }
+
     function getCode() {
         axios.post('/code', {
             email: document.getElementById('email').value
-        }, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
         }).then(({data}) => {
             alert(data);
         });
+    }
+
+    function checkField(field) {
+        var value = document.getElementById(field).value;
+        var errorElement = document.getElementById(field + 'Error');
+        var successElement = document.getElementById(field + 'Success');
+        var errorMessage = '';
+        var successMessage = '✔';
+
+        // 根据字段类型验证
+        switch (field) {
+            case 'username':
+                if (value.length < 4 || value.length > 10) {
+                    errorMessage = 'Username length should be between 3 and 10 characters';
+                    successMessage = '';
+                } else {
+                    validateUsername(value, successElement, errorElement);
+                }
+                break;
+            case 'email':
+                const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                if(regex.test(email)){
+                    errorMessage = 'Please enter a valid email address.';
+                    successMessage = '';
+                }else {
+                    validateEmail(value, successElement, errorElement);
+                }
+                break;
+            case 'password':
+                if (!/^(?=.*[a-zA-Z])(?=.*\d).{6,15}$/.test(value)) {
+                    errorMessage = 'Password must contain at least one letter and one number, and be between 6 and 15 characters';
+                    successMessage = '';
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        // 更新错误消息
+        errorElement.innerHTML = errorMessage;
+        successElement.innerHTML = successMessage;
+    }
+
+    function validateUsername(username, successElement,errorElement) {
+        fetch('/check_username', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: username })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (!data) {
+                    errorElement.innerHTML = 'Username already exists';
+                    successElement.innerHTML = '';
+                } else {
+                    successElement.innerHTML = 'Username available';
+                    errorElement.innerHTML = '';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                successElement.innerHTML = 'Error checking username';
+            });
+    }
+
+function validateEmail(email,successElement,errorElement) {
+        fetch('/check_email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (!data) {
+                    errorElement.innerHTML = 'Already existed';
+                    successElement.innerHTML = '';
+                } else {
+                    successElement.innerHTML = ' ';
+                }
+            })
+            .catch(error => console.error('Error:', error));
     }
 </script>
 </body>

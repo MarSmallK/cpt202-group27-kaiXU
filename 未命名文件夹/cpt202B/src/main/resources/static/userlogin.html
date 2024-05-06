@@ -10,7 +10,7 @@
             margin: 0;
         }
         .bg {
-            background-image: url('/picture/background.jpg');
+            background-image: url('background.jpg');
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -94,7 +94,7 @@
         <div class="login-header">
             <h1>XJTLU Fitness Centre</h1>
         </div>
-        <form class="login-form" on="login(); return false;">
+        <form class="login-form" onsubmit="login(); return false;">
             <input id="username" type="text" placeholder="Username" required>
             <input id="password" type="password" placeholder="Password" required>
             <input type="submit" value="登录">
@@ -127,6 +127,7 @@
             .then(data => {
                 if (data.id) {
                     alert("success");
+                    sessionStorage.setItem("username",username)
                     location.href = "userhomepage.html";
                 } else {
                     // 登录失败
@@ -138,7 +139,6 @@
                 alert("error");
             });
     }
-
 
 </script>
 </body>
