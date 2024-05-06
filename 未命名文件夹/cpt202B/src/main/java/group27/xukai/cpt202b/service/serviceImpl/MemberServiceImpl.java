@@ -1,7 +1,7 @@
 package group27.xukai.cpt202b.service.serviceImpl;
-
-import group27.xukai.cpt202b.entity.Member;
 import group27.xukai.cpt202b.repository.MemberRepository;
+import group27.xukai.cpt202b.entity.FitnessPlan;
+import group27.xukai.cpt202b.entity.Member;
 import group27.xukai.cpt202b.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,24 +32,24 @@ public class MemberServiceImpl implements MemberService {
 
     @Transactional
     @Override
-    public void clearMemberData(String userName) {
-        memberRepository.clearMemberData(userName);
+    public void clearMemberData(int Id) {
+        memberRepository.clearMemberData(Id);
     }
 
     @Override
-    public int getMemberBalance(String userName) {
-        return memberRepository.getBalanceByUserName(userName);
+    public int getMemberBalance(int Id) {
+        return memberRepository.getBalanceById(Id);
     }
 
 
     @Override
-    public String getPlanLevel(String userName) {
-        return memberRepository.getPlanLevel(userName);
+    public String getPlanLevel(int Id) {
+        return memberRepository.getPlanLevel(Id);
     }
 
     @Override
-    public void updateMemberWithFitnessPlan(String planLevel, String planDate, String userName) {
-        Member member = memberRepository.findByUserName(userName);
+    public void updateMemberWithFitnessPlan(String planLevel, String planDate, int Id) {
+        Member member = memberRepository.findById(Id).orElse(null);
         if (member != null) {
             member.setPlanLevel(planLevel);
             member.setPlanDate(planDate);
@@ -58,8 +58,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void updateMemberBalance(int balance, String userName) {
-        Member member = memberRepository.findByUserName(userName);
+    public void updateMemberBalance(int balance, int Id) {
+        Member member = memberRepository.findById(Id).orElse(null);
         if (member != null) {
             member.setBalance(balance);
             memberRepository.save(member);
@@ -67,8 +67,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void updateMemberPurchasePlanId(Integer purchasePlanId, String userName) {
-        Member member = memberRepository.findByUserName(userName);
+    public void updateMemberPurchasePlanId(Integer purchasePlanId, int Id) {
+        Member member = memberRepository.findById(Id).orElse(null);
         if (member != null) {
             member.setPurchasePlanId(purchasePlanId);
             memberRepository.save(member);
@@ -76,8 +76,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void updateTime(String userName, LocalDateTime startTime, LocalDateTime endTime) {
-        Member member = memberRepository.findByUserName(userName);
+    public void updateTime(int Id, LocalDateTime startTime, LocalDateTime endTime) {
+        Member member = memberRepository.findById(Id).orElse(null);
         if (member != null) {
             // 更新用户的开始时间和结束时间
             member.setStartTime(startTime);

@@ -1,11 +1,11 @@
-package org.example.a.Controller;
+package group27.xukai.cpt202b.controller;
 
 
 import jakarta.annotation.Resource;
-import org.example.a.Intercepter.LoginInterceptor;
-import org.example.a.entity.User;
-import org.example.a.mapper.userMapper;
-import org.example.a.service.UserService;
+//import group27.xukai.cpt202b.intercepter.LoginInterceptor;拦截器
+import group27.xukai.cpt202b.entity.User;
+import group27.xukai.cpt202b.mapper.userMapper;
+import group27.xukai.cpt202b.service.serviceImpl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,15 +17,15 @@ public class UserController {
     @Resource
     private userMapper userMapper;
 
-    @PostMapping("/login")
-    public User login(@RequestBody User user) {
-        User dbUser = userMapper.getUserByNameAndPassword(user.getUsername(), user.getPassword());
-
-        if (dbUser != null) {
-            LoginInterceptor.success(true);
-        }
-        return dbUser;
-    }
+//    @PostMapping("/login")
+//    public User login(@RequestBody User user) {
+//        User dbUser = userMapper.getUserByNameAndPassword(user.getUsername(), user.getPassword());
+//
+//        if (dbUser != null) {
+//            LoginInterceptor.success(true);
+//        }
+//        return dbUser;
+//    }
     @PostMapping("/emailexist")
     public Map<String, Object> emailexist(@RequestBody User user) {
         Map<String, Object> response = new HashMap<>();

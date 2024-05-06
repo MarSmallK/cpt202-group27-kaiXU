@@ -1,17 +1,14 @@
 package group27.xukai.cpt202b.controller;
 
-import group27.xukai.cpt202b.service.FitnessPlanService;
-import group27.xukai.cpt202b.service.MemberService;
 import group27.xukai.cpt202b.entity.FitnessPlan;
 import group27.xukai.cpt202b.entity.Member;
+import group27.xukai.cpt202b.service.FitnessPlanService;
+import group27.xukai.cpt202b.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,10 +29,12 @@ public class MemberController {
     private FitnessPlanService fitnessPlanService;
 
     @PostMapping("/buyAndUpdate")
-    public ResponseEntity<String> buyAndUpdate(@RequestBody Map<String, Object> requestBody) {
-        String userName = (String) requestBody.get("userName");
-        int planId = (int) requestBody.get("planId");
-        if (userName == null || planId == 0) {
+    public ResponseEntity<String> buyAndUpdate(@RequestBody Map<String, Integer> requestBody) {
+        Integer planId = requestBody.get("planId");
+        //要改
+        int Id = 1;
+
+        if (Id == 0 || planId == null) {
             return ResponseEntity.badRequest().body("Invalid memberId or planId");
         }
 
@@ -49,7 +48,7 @@ public class MemberController {
         int planPrice = fitnessPlan.getPlanPrice();
 
         // 从数据库中获取会员当前余额
-        int currentBalance = memberService.getMemberBalance(userName);
+        int currentBalance = memberService.getMemberBalance(Id);
 
         // 检查余额是否足够支付计划价格
         if (currentBalance < planPrice) {
@@ -57,14 +56,14 @@ public class MemberController {
         }
 
         // 更新会员的计划级别和计划日期
-        memberService.updateMemberWithFitnessPlan(planLevel, planDate, userName);
-        memberService.updateMemberPurchasePlanId(planId, userName);
+        memberService.updateMemberWithFitnessPlan(planLevel, planDate, Id);
+        memberService.updateMemberPurchasePlanId(planId, Id);
 
         // 计算扣除计划价格后的新余额
         int newBalance = currentBalance - planPrice;
 
         // 更新数据库中会员的余额
-        memberService.updateMemberBalance(newBalance, userName);
+        memberService.updateMemberBalance(newBalance, Id);
 
         // 更新会员的时间信息
         LocalDateTime startTime = LocalDateTime.now();
@@ -79,7 +78,7 @@ public class MemberController {
 
 // 确保 endTime 在此处被赋值后才调用 updateTime 方法
         if (endTime != null) {
-            memberService.updateTime(userName, startTime, endTime);
+            memberService.updateTime(Id, startTime, endTime);
         }
         return ResponseEntity.ok("Member's fitness plan, balance, and time updated successfully!");
     }
@@ -92,28 +91,35 @@ public class MemberController {
     }
 
     @GetMapping("/getBalance")
-    public ResponseEntity<Integer> getBalance(@RequestBody Map<String, String> requestBody) {
-        String userName = requestBody.get("userName");
-        int balance = memberService.getMemberBalance(userName);
+    public ResponseEntity<Integer> getBalance() {
+        // 假设当前用户的ID已经在会话中存储，或者通过其他方式获取
+        // int userId = getCurrentUserId();
+        //要改
+        int Id = 1;
+        // 根据用户ID从数据库中获取用户的余额
+        int balance = memberService.getMemberBalance(Id);
 
         return ResponseEntity.ok(balance);
     }
 
     @GetMapping("/getPlanLevel")
-    public ResponseEntity<String> getPlanLevel(@RequestBody Map<String, String> requestBody) {
-        String userName = requestBody.get("userName");
+    public ResponseEntity<String> getPlanLevel() {
+        // 假设当前用户的ID已经在会话中存储，或者通过其他方式获取
+        // int userId = getCurrentUserId();
+        //要改
+        int Id = 1;
         // 根据用户ID从数据库中获取用户的余额
-        String planLevel = memberService.getPlanLevel(userName);
+        String planLevel = memberService.getPlanLevel(Id);
 
         return ResponseEntity.ok(planLevel);
     }
 
     @PostMapping("/deleteAndUpdatePlan")
-    public ResponseEntity<String> Update(@RequestBody Map<String, Object> requestBody) {
-        int purchasePlanId = (int) requestBody.get("purchasePlanId");
-        String userName = (String) requestBody.get("userName");
+    public ResponseEntity<String> Update(@RequestBody Map<String, Integer> requestBody) {
+        int purchasePlanId = requestBody.get("purchasePlanId");
+        int Id = 1;
 
-        if (userName == null || purchasePlanId == 0) {
+        if (Id == 0 || purchasePlanId == 0) {
             return ResponseEntity.badRequest().body("Invalid memberId");
         }
 
@@ -125,15 +131,15 @@ public class MemberController {
         int planPrice = fitnessPlan.getPlanPrice();
 
         // 从数据库中获取会员当前余额
-        int currentBalance = memberService.getMemberBalance(userName);
+        int currentBalance = memberService.getMemberBalance(Id);
 
         // 计算加上计划价格后的新余额
         int newBalance = currentBalance + planPrice;
 
         // 更新数据库中会员的余额
-        memberService.updateMemberBalance(newBalance, userName);
+        memberService.updateMemberBalance(newBalance, Id);
         // 调用服务层方法删除会员信息
-        memberService.clearMemberData(userName);
+        memberService.clearMemberData(Id);
 
         return ResponseEntity.ok("Member's fitness plan, balance, and time updated successfully!");
     }
