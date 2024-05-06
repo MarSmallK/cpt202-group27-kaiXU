@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Fitness Plan</title>
-    <link rel="stylesheet" href="/css/fitnessPlan.css">
+    <link rel="stylesheet" href="/static/css/fitnessPlan.css">
+    <link rel="stylesheet" href="/static/css/balance.css">
 </head>
 <body>
+<div id="balance-container">
+    <h1>Member Balance:</h1>
+    <div id="balance" th:text="${balance}"></div>
+</div>
+
+
 <h2>Fitness Plan</h2>
-<table >
+<table>
     <thead>
     <tr>
         <th>Plan ID</th>
@@ -26,7 +33,9 @@
         <td th:text="${fitnessPlan.planPrice}"></td>
         <td>
 
-            <button th:onclick="'buy(\'' + ${fitnessPlan.planId} + '\', \'' + ${fitnessPlan.planPrice} + '\')'">purchase</button>
+            <button th:onclick="'buy(\'' + ${fitnessPlan.planId} + '\', \'' + ${fitnessPlan.planPrice} + '\')'">
+                purchase
+            </button>
         </td>
     </tr>
     </tbody>
@@ -35,7 +44,15 @@
 <a href="/member/fitnessplan/View" class="btn btn-primary">View My Fitness Plan</a>
 
 <script th:inline="javascript">
-
+    //先显示余额
+    fetch('/member/fitnessplan/getBalance')
+        .then(response => response.json())
+        .then(balance => {
+            document.getElementById('balance').innerText = balance;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     function buy(planId, planPrice) {
         // 发送 AJAX 请求到后端，获取当前用户的余额
         fetch('/member/fitnessplan/getBalance')
@@ -52,13 +69,15 @@
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ planId: planId })
+                        body: JSON.stringify({planId: planId})
                     }).then(response => {
                         if (response.ok) {
                             // 如果购买成功，弹出购买成功的提示框
                             alert("purchase succeeded");
                             // 更新余额和时间
                             updateBalance(planId);
+                            // 获取更新后的余额显示在页面
+                            getBalance();
                         } else {
                             // 如果购买失败，弹出购买失败的提示框
                             alert("purchase failed。");
@@ -81,9 +100,20 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ planId: planId }) })}/* 将planId作为请求体发送给后端 */
+            body: JSON.stringify({planId: planId})
+        })
+    }/* 将planId作为请求体发送给后端 */
 
-
+    function getBalance() {
+        fetch('/member/fitnessplan/getBalance')
+            .then(response => response.json())
+            .then(balance => {
+                document.getElementById('balance').innerText = balance;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 </script>
 </body>
 </html>

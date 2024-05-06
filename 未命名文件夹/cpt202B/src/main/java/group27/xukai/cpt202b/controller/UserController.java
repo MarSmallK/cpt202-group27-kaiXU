@@ -2,7 +2,7 @@ package group27.xukai.cpt202b.controller;
 
 
 import jakarta.annotation.Resource;
-//import group27.xukai.cpt202b.Intercepter.LoginInterceptor;
+//import group27.xukai.cpt202b.intercepter.LoginInterceptor;拦截器
 import group27.xukai.cpt202b.entity.User;
 import group27.xukai.cpt202b.mapper.userMapper;
 import group27.xukai.cpt202b.service.serviceImpl.UserService;
@@ -17,15 +17,15 @@ public class UserController {
     @Resource
     private userMapper userMapper;
 
-    @PostMapping("/login")
-    public User login(@RequestBody User user) {
-        User dbUser = userMapper.getUserByNameAndPassword(user.getUsername(), user.getPassword());
-
+//    @PostMapping("/login")
+//    public User login(@RequestBody User user) {
+//        User dbUser = userMapper.getUserByNameAndPassword(user.getUsername(), user.getPassword());
+//
 //        if (dbUser != null) {
 //            LoginInterceptor.success(true);
 //        }
-        return dbUser;
-    }
+//        return dbUser;
+//    }
     @PostMapping("/emailexist")
     public Map<String, Object> emailexist(@RequestBody User user) {
         Map<String, Object> response = new HashMap<>();

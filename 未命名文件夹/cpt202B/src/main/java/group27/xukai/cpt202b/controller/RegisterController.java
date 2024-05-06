@@ -1,9 +1,9 @@
 package group27.xukai.cpt202b.controller;
 
-import group27.xukai.cpt202b.service.serviceImpl.RegisterService;
-import group27.xukai.cpt202b.service.serviceImpl.UserRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import group27.xukai.cpt202b.service.serviceImpl.UserRequest;
+import group27.xukai.cpt202b.service.serviceImpl.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

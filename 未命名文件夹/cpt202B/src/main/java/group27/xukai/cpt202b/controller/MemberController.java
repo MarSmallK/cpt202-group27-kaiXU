@@ -1,17 +1,14 @@
 package group27.xukai.cpt202b.controller;
 
-import group27.xukai.cpt202b.service.FitnessPlanService;
-import group27.xukai.cpt202b.service.MemberService;
 import group27.xukai.cpt202b.entity.FitnessPlan;
 import group27.xukai.cpt202b.entity.Member;
+import group27.xukai.cpt202b.service.FitnessPlanService;
+import group27.xukai.cpt202b.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Fitness Plan</title>
-    <link rel="stylesheet" href="/static/css/fitnessPlan.css">
+    <link rel="stylesheet" href="/css/fitnessPlan.css">
 </head>
 <body>
 <h2>The expiration date of my fitness program</h2>
@@ -33,6 +33,9 @@
     </tbody>
 </table>
 
+
+<a href="/member/fitnessplan" class="btn btn-primary">Return to the Purchase Fitness Plan page</a>
+
 <script th:inline="javascript">
     function deleteAndUpdatePlan(purchasePlanId){
         fetch('/member/fitnessplan/deleteAndUpdatePlan', {
@@ -55,37 +58,7 @@
             console.error('Error:', error);
         });
     }
-    // function deletePlan(purchasePlanId) {
-    //     // 发送 AJAX 请求给后端，删除对应的计划
-    //     fetch('/member/fitnessplan/deletePlan', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({ purchasePlanId: purchasePlanId })
-    //     }).then(response => {
-    //         if (response.ok) {
-    //             // 如果删除成功，弹出删除成功的提示框
-    //             alert("Plan deleted successfully");
-    //             // 更新页面或执行其他操作
-    //             location.reload(); // 重新加载页面
-    //         } else {
-    //             // 如果删除失败，弹出删除失败的提示框
-    //             alert("Failed to delete plan");
-    //         }
-    //     }).catch(error => {
-    //         console.error('Error:', error);
-    //     });
-    // }
-    //
-    // function  updatePlan(purchasePlanId) {
-    //     /* 发送POST请求给后端 */
-    //     fetch('/member/fitnessplan/Update', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({ purchasePlanId: purchasePlanId}) })}
+
 </script>
 </body>
 </html>

@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+/* 在同一行上显示 */
+#balance-container {
+    display: flex;
+    align-items: center;
+}
+
+#balance {
+    font-family: 'Roboto', sans-serif;
+    font-size: 48px;
+    color: #a1a60d; /* 设置字体颜色 */
+}

@@ -1,11 +1,10 @@
 package group27.xukai.cpt202b.service.serviceImpl;
 
-import group27.xukai.cpt202b.entity.FitnessPlan;
 import group27.xukai.cpt202b.repository.FitnessPlanRepository;
+import group27.xukai.cpt202b.entity.FitnessPlan;
 import group27.xukai.cpt202b.service.FitnessPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

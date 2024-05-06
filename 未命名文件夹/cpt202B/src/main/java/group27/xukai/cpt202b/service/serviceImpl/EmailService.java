@@ -1,4 +1,4 @@
-package group27.xukai.cpt202b.service;
+package group27.xukai.cpt202b.service.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
