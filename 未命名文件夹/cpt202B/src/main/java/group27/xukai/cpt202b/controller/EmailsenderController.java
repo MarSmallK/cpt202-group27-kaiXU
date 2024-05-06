@@ -19,6 +19,7 @@ public class EmailsenderController {
     @PostMapping("/code")
     public ResponseEntity<String> getCode(@RequestParam String email,
                                           HttpSession session) {
+        System.out.println(email);
         Random random = new Random();
         int code = random.nextInt(90000) + 10000;
         session.setAttribute("code", code);

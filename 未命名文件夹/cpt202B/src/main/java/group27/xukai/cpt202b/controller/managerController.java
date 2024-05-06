@@ -1,8 +1,12 @@
 package group27.xukai.cpt202b.controller;
 
 
-import jakarta.annotation.Resource;
 import group27.xukai.cpt202b.entity.Manager;
+import jakarta.annotation.Resource;
+<<<<<<< HEAD
+import group27.xukai.cpt202b.entity.Manager;
+=======
+>>>>>>> parent of f145697 (毛佳琦)
 import group27.xukai.cpt202b.mapper.managerMapper;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

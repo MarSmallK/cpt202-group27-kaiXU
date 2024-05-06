@@ -1,9 +1,14 @@
 package group27.xukai.cpt202b.controller;
 
+import group27.xukai.cpt202b.service.serviceImpl.RegisterService;
+import group27.xukai.cpt202b.service.serviceImpl.UserRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+<<<<<<< HEAD
 import group27.xukai.cpt202b.service.serviceImpl.UserRequest;
 import group27.xukai.cpt202b.service.serviceImpl.RegisterService;
+=======
+>>>>>>> parent of f145697 (毛佳琦)
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,35 +31,24 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public Boolean register(@RequestBody UserRequest userRequest, HttpServletRequest request) {
+    public String register(@RequestBody UserRequest userRequest, HttpServletRequest request) {
         HttpSession session = request.getSession();
+        if (!registerService.validateUsername(userRequest.getUsername())) {
+            return "用户名长度应在3到10个字符之间";
+        }
         if (registerService.userExists(userRequest.getUsername())) {
-            return false;
+            return "用户已存在";
         }
         if (registerService.emailExists(userRequest.getEmail())) {
-            return false;
+            return "邮箱已被注册";
         }
         if (!registerService.validatePassword(userRequest.getPassword())) {
-            return false;
+            return "密码应包含数字和字母，并且长度应在6到15个字符之间";
         }
         if (!registerService.verifyCode(session, userRequest.getCode())) {
-            return false;
+            return "验证码错误，请重新输入";
         }
         registerService.registerUser(userRequest.getUsername(), userRequest.getPassword(), userRequest.getEmail());
-        return true;
-    }
-    @PostMapping("check_username")
-    public Boolean checkusername(@RequestBody UserRequest userRequest, HttpServletRequest request) {
-        if (registerService.userExists(userRequest.getUsername())) {
-            return false;
-        }
-        return true;
-    }
-    @PostMapping("check_email")
-    public Boolean checkemail(@RequestBody UserRequest userRequest, HttpServletRequest request) {
-        if (registerService.emailExists(userRequest.getEmail())) {
-            return false;
-        }
-        return true;
+        return "注册成功";
     }
 }
