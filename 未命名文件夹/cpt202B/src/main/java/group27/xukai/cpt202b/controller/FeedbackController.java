@@ -2,7 +2,6 @@ package group27.xukai.cpt202b.controller;
 
 import group27.xukai.cpt202b.entity.Feedback;
 import group27.xukai.cpt202b.service.FeedbackService;
-import jakarta.annotation.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Controller

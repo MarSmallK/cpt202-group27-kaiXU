@@ -1,7 +1,7 @@
 package group27.xukai.cpt202b.service.serviceImpl;
-import group27.xukai.cpt202b.repository.MemberRepository;
-import group27.xukai.cpt202b.entity.FitnessPlan;
+
 import group27.xukai.cpt202b.entity.Member;
+import group27.xukai.cpt202b.repository.MemberRepository;
 import group27.xukai.cpt202b.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

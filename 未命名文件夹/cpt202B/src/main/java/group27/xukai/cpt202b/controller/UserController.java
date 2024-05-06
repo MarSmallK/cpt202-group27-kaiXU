@@ -6,17 +6,11 @@ import group27.xukai.cpt202b.service.serviceImpl.UserService;
 import group27.xukai.cpt202b.entity.User;
 import group27.xukai.cpt202b.mapper.userMapper;
 import jakarta.annotation.Resource;
-<<<<<<< HEAD
-//import group27.xukai.cpt202b.intercepter.LoginInterceptor;拦截器
-import group27.xukai.cpt202b.entity.User;
-import group27.xukai.cpt202b.mapper.userMapper;
-import group27.xukai.cpt202b.service.serviceImpl.UserService;
-=======
->>>>>>> parent of f145697 (毛佳琦)
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.HashMap;
 import java.util.Map;
 

@@ -4,11 +4,6 @@ import group27.xukai.cpt202b.service.serviceImpl.RegisterService;
 import group27.xukai.cpt202b.service.serviceImpl.UserRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-<<<<<<< HEAD
-import group27.xukai.cpt202b.service.serviceImpl.UserRequest;
-import group27.xukai.cpt202b.service.serviceImpl.RegisterService;
-=======
->>>>>>> parent of f145697 (毛佳琦)
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

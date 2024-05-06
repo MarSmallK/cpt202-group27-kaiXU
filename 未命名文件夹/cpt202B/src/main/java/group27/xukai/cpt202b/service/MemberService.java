@@ -1,6 +1,5 @@
 package group27.xukai.cpt202b.service;
 
-import group27.xukai.cpt202b.entity.FitnessPlan;
 import group27.xukai.cpt202b.entity.Member;
 
 import java.time.LocalDateTime;

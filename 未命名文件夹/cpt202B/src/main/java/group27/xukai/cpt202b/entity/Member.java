@@ -21,8 +21,12 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private int Id;
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "gender")
+    private String gender;
+    @Column(name = "age")
+    private int age;
     @Column(name = "plan_level")
     private String planLevel;
     @Column(name = "plan_date")
