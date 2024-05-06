@@ -6,3 +6,9 @@ button:hover {
     cursor: pointer; /* 将鼠标样式设置为指针 */
 }
 
+
+button {
+    padding: 10px 24px;
+    font-size: 16px; /* 增加字体大小 */
+}
+
