@@ -1,7 +1,7 @@
 package group27.xukai.cpt202b.controller;
 
-import group27.xukai.cpt202b.service.NotificationInterface;
 import group27.xukai.cpt202b.entity.Notification;
+import group27.xukai.cpt202b.service.NotificationInterface;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -59,4 +59,6 @@ public class NotificationController {
         notificationInterface.Update(notification);
         return new ModelAndView("redirect:/NotificationDisplay");
     }
+
 }
+
