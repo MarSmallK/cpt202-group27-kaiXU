@@ -1,0 +1,58 @@
+body {
+    font-family: 'Roboto', sans-serif; /* 使用Roboto字体 */
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0; /* 设置背景颜色 */
+}
+h2 {
+    font-size: 36px; /* 设置标题字体大小 */
+    color: #333; /* 设置标题颜色 */
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #fff; /* 设置表格背景颜色 */
+    border-radius: 8px; /* 设置表格圆角 */
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+    font-size: 20px;
+}
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 12px;
+}
+th {
+    background-color: #f2f2f2;
+}
+/* custom.css */
+.btn {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+}
