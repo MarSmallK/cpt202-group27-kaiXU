@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>器材管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="./css/layui.css" media="all">
+</head>
+<body>
+<table class="layui-hide" id="equipmentTableId" lay-filter="equipmentTableId"></table>
+
+<script src="./layui.js" charset="utf-8"></script>
+<script src="./jquery-3.0.0.min.js" charset="utf-8"></script>
+<script src="./common.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+        var laypage = layui.laypage;
+        var params = {};
+        table.render({
+            toolbar: '#toolbarDemo',
+            elem: '#equipmentTableId',
+            method: 'POST',
+            url: baseURL+'/equipment/equipment/queryPageEquipment',
+            page: true,
+            parseData: function (res) {
+                if(res.code){
+                    return { "data": res.data.records, "code": 0 ,"count":res.data.total};
+                }else {
+                    return { "code": -1 };
+                }
+            },
+            request:{
+                pageName:'current', limitName:'size'
+            },
+            where: params,
+            done: function (res) {
+                laypage.render({
+                    elem: 'laypage',
+                    count: res.data.total,
+                    curr: res.data.current,
+                    limit: res.data.size,
+                    jump: function (obj, first) {
+                        if (!first) {
+                        }
+                    }
+                })
+            },
+            cols: [[
+                {field: 'id', width: '10%', title: 'ID', sort: true},
+                {field: 'equipmentTypeName', width: '20%', title: 'equipmentTypeName'},
+                {field: 'equipmentCode', width: '15%', title: 'equipmentCode'},
+                {field: 'equipmentPrice', width: '15%', title: 'equipmentPrice'},
+                {field: 'addTime', width: '20%', title: 'addTime'},
+                {field: 'option', title: 'option',width: '20%',align:'center',toolbar: '#barDemo'}
+            ]]
+        });
+        table.on('toolbar(equipmentTableId)', function(obj){
+            switch(obj.event){
+                case 'addEquipmentFun':
+                    addEquipmentFun('','add');
+                    break;
+            };
+        });
+        table.on('tool(equipmentTableId)', function(obj){
+            switch(obj.event){
+                case 'viewEquipmentFun':
+                    addEquipmentFun(obj.data.id,'view');
+                    break;
+                case 'editEquipmentFun':
+                    addEquipmentFun(obj.data.id,'edit');
+                    break;
+                case 'deleteEquipmentFun':
+                    deleteEquipmentFun(obj.data.id);
+                    break;
+            };
+        });
+    });
+</script>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="addEquipmentFun">addEquipment</button>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="viewEquipmentFun">view</a>
+    <a class="layui-btn layui-btn-xs" lay-event="editEquipmentFun">edit</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="deleteEquipmentFun">delete</a>
+</script>
+<script>
+    function addEquipmentFun(id,type){
+        //iframe窗
+        layer.open({
+            type: 2,
+            title: false,
+            closeBtn: 0, //不显示关闭按钮
+            shade: [0],
+            area: ['340px', '215px'],
+            //offset: 'rb', //右下角弹出
+            time: 1000, //2秒后自动关闭
+            anim: 2,
+            //content: ['test/guodu.html', 'no'], //iframe的url，no代表不显示滚动条
+            end: function(){ //此处用于演示
+                layer.open({
+                    type: 2,
+                    title: 'equipmentDetail',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: true, //开启最大化最小化按钮
+                    area: ['60%', '50%'],
+                    content: ['equipmentDetail.html?id='+id+'&type='+type, 'no']
+                });
+            }
+        });
+    }
+    function deleteEquipmentFun(id){
+        layer.open({
+            type: 1
+            ,title: false //不显示标题栏
+            ,closeBtn: false
+            ,area: '300px;'
+            ,shade: 0.8
+            ,id: 'LAY_layuipro'
+            ,btn: ['confirm', 'cancel']
+            ,btnAlign: 'c'
+            ,moveType: 1 //拖拽模式，0或者1
+            ,content: '<div style="text-align: center; padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">sureDelete</div>'
+            ,yes: function(){
+                layer.closeAll();
+                var myload=layer.load(1);
+                $.ajax({
+                    url: baseURL+'/equipment/equipment/logicalDeleteEquipment?ids='+id,
+                    dataType:'json',
+                    async:false,
+                }).done(function (res) {
+                    if (res.status) {
+                        layer.close(myload);
+                        layer.msg('success', {icon: 1});
+                    }
+                }).fail(function (res) {
+                    layer.close(myload);
+                    layer.msg('fail', {icon: 5});
+                })
+                layer.close(myload);
+                location.reload();
+            }
+        });
+    }
+</script>
+</body>
+</html>
