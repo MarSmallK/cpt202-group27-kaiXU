@@ -1,4 +1,4 @@
-package org.example.a.Controller;
+package group27.xukai.cpt202b.controller;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
